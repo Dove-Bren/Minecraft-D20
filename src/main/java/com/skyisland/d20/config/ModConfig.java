@@ -199,6 +199,10 @@ public class ModConfig {
 		return AdminFile.getAdmins(base.getConfigFile(), getStringValue(Key.ADMINS));
 	}
 	
+	public boolean isAdmin(UUID uuid) {
+		return getAdminsList().contains(uuid);
+	}
+	
 	
 	/**************************
 	 *   Underlying getters

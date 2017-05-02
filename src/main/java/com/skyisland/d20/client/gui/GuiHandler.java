@@ -3,6 +3,9 @@
  */
 package com.skyisland.d20.client.gui;
 
+import com.skyisland.d20.D20Mod;
+import com.skyisland.d20.config.ModConfig;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -22,8 +25,8 @@ public class GuiHandler implements IGuiHandler {
 		
 		// Check for the GUI type
 		if (ID == Gui_Type.DIE_SCREEN.ordinal()) {
-			//TODO check if admin
-			return new DieRollerGui.DRollerContainer();
+			if (ModConfig.config.isAdmin(player.getUniqueID()))
+				return new DieRollerGui.DRollerContainer();
 		} //else if ...
 		
 		return null;
@@ -35,7 +38,8 @@ public class GuiHandler implements IGuiHandler {
 		
 		// Check for GUI Type
 		if (ID == Gui_Type.DIE_SCREEN.ordinal()) {
-			return new DieRollerGui.DRollerGui(new DieRollerGui.DRollerContainer());
+			if (D20Mod.proxy.isAdmin())
+				return new DieRollerGui.DRollerGui(new DieRollerGui.DRollerContainer());
 		} // else if ...
 		
 		return null;
