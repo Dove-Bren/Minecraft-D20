@@ -3,6 +3,9 @@ package com.skyisland.d20;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.skyisland.d20.config.ModConfig;
+
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,6 +23,7 @@ public class D20Mod
     public void preinit(FMLPreInitializationEvent event)
     {
     	instance = this;
+    	new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
     }
     
     @EventHandler
