@@ -1,13 +1,12 @@
 package com.skyisland.d20.proxy;
 
 import com.skyisland.d20.D20Mod;
+import com.skyisland.d20.client.gui.GuiHandler;
 import com.skyisland.d20.network.NetworkHandler;
 import com.skyisland.d20.network.message.AdminTokenMessage;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy  {
 	
