@@ -1,12 +1,9 @@
 package com.skyisland.d20.proxy;
 
-import com.skyisland.d20.D20Mod;
-import com.skyisland.d20.client.gui.GuiHandler;
 import com.skyisland.d20.network.NetworkHandler;
 import com.skyisland.d20.network.message.AdminTokenMessage;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy  {
 	
@@ -44,7 +41,7 @@ public class CommonProxy  {
 	  
 	public void init() {
 		System.out.println("Network Proxy initializing.");
-		NetworkRegistry.INSTANCE.registerGuiHandler(D20Mod.instance, new GuiHandler());
+		//NetworkRegistry.INSTANCE.registerGuiHandler(D20Mod.instance, new GuiHandler());
 	}
 	
 	/**
@@ -66,5 +63,13 @@ public class CommonProxy  {
 
 	public void sendAdminToken(EntityPlayerMP player) {
 		NetworkHandler.channel.sendTo(new AdminTokenMessage(), player);
+	}
+
+	public boolean doDisplayRoller() {
+		return false;
+	}
+	
+	public void toggleRollerDisplay() {
+		; //nothing to do. client only
 	}
 }

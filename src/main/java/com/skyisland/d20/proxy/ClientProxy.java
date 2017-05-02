@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class ClientProxy extends CommonProxy {
 
+	protected boolean displayRoller = false;
+	
 	/**
 	   * Run before anything else. Read your config, create blocks, items, etc, and register them with the GameRegistry
 	   */
@@ -42,5 +44,15 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void sendAdminToken(EntityPlayerMP player) {
 		; //do nothing on client side
+	}
+	
+	@Override
+	public boolean doDisplayRoller() {
+		return displayRoller;
+	}
+	
+	@Override
+	public void toggleRollerDisplay() {
+		displayRoller = !displayRoller;
 	}
 }

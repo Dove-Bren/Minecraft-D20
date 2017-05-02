@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "D20",
+  "name": "D20 Mod",
+  "description": "Server-wide Dice Roller",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["dove-bren"],
+  "credits": "Skyler Manzanares",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
