@@ -2,7 +2,6 @@ package com.skyisland.d20.listener;
 
 
 import com.skyisland.d20.D20Mod;
-import com.skyisland.d20.config.ModConfig;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,7 +19,7 @@ public class PlayerListener {
 		if (event.player instanceof EntityPlayerMP) {
 			
 			//check admin list
-			if (!ModConfig.config.getAdminsList().contains(event.player.getUniqueID()))
+			if (!D20Mod.adminRegistry.isAdmin(event.player))
 				return;
 			
 			D20Mod.logger.info("Sending admin-token to " + event.player.getName());

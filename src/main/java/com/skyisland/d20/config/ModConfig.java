@@ -2,9 +2,7 @@ package com.skyisland.d20.config;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import com.skyisland.d20.D20Mod;
 
@@ -21,6 +19,7 @@ public class ModConfig {
 	public static enum Key {
 		ENABLED(Category.SERVER, "enabled", true, true, "Is this mod enabled? When turned off, all mechanics use regular MC mechanics and no events are caught."),
 		ADMINS(Category.SERVER, "admin_file", "admin.txt", true, "Filename of the file that lists admins"),
+		USE_ADMIN_NAMES(Category.SERVER, "use_admin_names", false, true, "If true, will match admins based on their name. Otherwise, will use UUIDs."),
 		SHOW_TEXT(Category.DISPLAY, "show_text", false, false, "On rolls, should the result be given as text?"),
 		SHOW_ROLL(Category.DISPLAY, "show_roll", true, false, "On rolls, should the die-rolling animation play?");
 		
@@ -195,15 +194,6 @@ public class ModConfig {
 			base.save();
 	}
 	
-	public List<UUID> getAdminsList() {
-		return AdminFile.getAdmins(base.getConfigFile().getParentFile(), getStringValue(Key.ADMINS));
-	}
-	
-	public boolean isAdmin(UUID uuid) {
-		return getAdminsList().contains(uuid);
-	}
-	
-	
 	/**************************
 	 *   Underlying getters
 	 *************************/
@@ -234,6 +224,26 @@ public class ModConfig {
 		//DOESN'T cast check. Know what you're doing before you do it
 		return base.getString(key.getKey(), key.getCategory(), (String) key.getDefault(),
 				key.getDescription());
-		}
+	}
+	
+	public boolean isEnabled() {
+		return getBooleanValue(Key.ENABLED);
+	}
+	
+	public String getAdminFileName() {
+		return getStringValue(Key.ADMINS);
+	}
+	
+	public boolean showText() {
+		return getBooleanValue(Key.SHOW_TEXT);
+	}
+	
+	public boolean showRoll() {
+		return getBooleanValue(Key.SHOW_ROLL);
+	}
+	
+	public boolean useAdminNames() {
+		return getBooleanValue(Key.USE_ADMIN_NAMES);
+	}
 		
 }

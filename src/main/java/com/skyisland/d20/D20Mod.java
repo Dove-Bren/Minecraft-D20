@@ -7,6 +7,7 @@ import com.skyisland.d20.config.ModConfig;
 import com.skyisland.d20.listener.PlayerListener;
 import com.skyisland.d20.network.NetworkHandler;
 import com.skyisland.d20.proxy.CommonProxy;
+import com.skyisland.d20.registry.AdminRegistry;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -31,12 +32,14 @@ public class D20Mod
     public static Logger logger = LogManager.getLogger(MODID);
     
     public static PlayerListener playerListener;
+    public static AdminRegistry adminRegistry;
     
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
     	instance = this;
     	new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
+    	adminRegistry = new AdminRegistry(event.getSuggestedConfigurationFile(), ModConfig.config.getAdminFileName());
     	playerListener = new PlayerListener();
     	NetworkHandler.getInstance();
     }

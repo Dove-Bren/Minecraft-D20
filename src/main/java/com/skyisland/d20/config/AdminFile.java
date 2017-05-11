@@ -8,57 +8,33 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import com.skyisland.d20.D20Mod;
 
 public abstract class AdminFile {
 	
 	public static final String escSeq = "--";
-	
-	private static List<UUID> internalIDs = null;
-	
-	private static String lastFile = null;
 
-	public static List<UUID> getAdmins(File base, String fileName) {
+	public static List<String> getAdmins(File base, String fileName) {
 
 		File adminFile = new File(base, fileName);
-		if (internalIDs != null) {
-			//see if requested file matches lastFile name
-			if (lastFile != null && lastFile.equalsIgnoreCase(adminFile.getAbsolutePath()))
-				return internalIDs; //same as requested file
-		}
 		
-		D20Mod.logger.info("Loading admin file to cache...");
-		
-		//regardless of above, they requested a file we don't have cached. Load and cache it		
+		D20Mod.logger.info("Reading admin file...");
 		
 		if (!adminFile.exists()) {
 			D20Mod.logger.info("Admin config file " + adminFile.getAbsolutePath() + " doesn't exist. Creating default admin file...");
 			createDefaultAdminFile(adminFile);
 		}
 		
-		List<UUID> list;
+		List<String> list;
 		D20Mod.logger.info("Opening admin file " + adminFile.getAbsolutePath());
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(adminFile));
 			
-			list = new LinkedList<UUID>();
-			String line;
-			UUID id = null;
+			list = new LinkedList<String>();
 			while (reader.ready()) {
-				line = reader.readLine().trim();
-				if (line.startsWith(escSeq))
-					continue;
-				
-				try {
-					id = UUID.fromString(line);
-				} catch (IllegalArgumentException e) {
-					D20Mod.logger.warn("Unable to parse UUID: [" + line + "]");
-					continue;
-				}
-				list.add(id);
+				list.add(reader.readLine());
 			}
 			
 			reader.close();
@@ -66,16 +42,12 @@ public abstract class AdminFile {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			D20Mod.logger.fatal("Unable to open admin file. No admins will exist (besides server)");
-			return new LinkedList<UUID>();
+			return new LinkedList<String>();
 		} catch (IOException e) {
 			e.printStackTrace();
 			D20Mod.logger.fatal("Encounted fatal IO error while parsing admin list!");
-			return new LinkedList<UUID>();
+			return new LinkedList<String>();
 		}
-		
-		//cache returns
-		internalIDs = list;
-		lastFile = adminFile.getAbsolutePath();
 		
 		D20Mod.logger.info("Loaded " + list.size() + " admin IDs");
 		return list;
