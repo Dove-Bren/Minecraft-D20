@@ -53,7 +53,6 @@ public abstract class AdminFile {
 		return list;
 		
 	}
-	
 
 	public static void createDefaultAdminFile(File adminFile) {
 		try {

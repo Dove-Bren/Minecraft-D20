@@ -1,7 +1,12 @@
 package com.skyisland.d20.proxy;
 
+import java.util.List;
+
+import com.skyisland.d20.die.Die;
 import com.skyisland.d20.network.NetworkHandler;
 import com.skyisland.d20.network.message.AdminTokenMessage;
+import com.skyisland.d20.network.message.RollRequestMessage;
+import com.skyisland.d20.network.message.RollResultMessage;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -65,11 +70,32 @@ public class CommonProxy  {
 		NetworkHandler.getAdminChannel().sendTo(new AdminTokenMessage(), player);
 	}
 
+	public void sendRollResult(EntityPlayerMP player, int result) {
+		NetworkHandler.getRollChannel().sendTo(new RollResultMessage(result), player);
+	}
+
 	public boolean doDisplayRoller() {
 		return false;
 	}
 	
 	public void toggleRollerDisplay() {
 		; //nothing to do. client only
+	}
+	
+	public void executeRoll(List<EntityPlayerMP> players, int side) {
+		//server side roll means do a roll and send to all clients
+		int result = Die.roll(side);
+		for (EntityPlayerMP player : players) {
+			sendRollResult(player, result);
+		}
+	}
+	
+	public void displayRoll(int result) {
+		
+	}
+	
+	public void sendRollRequest(int sides) {
+		if (isAdmin())
+			NetworkHandler.getRollChannel().sendToServer(new RollRequestMessage(sides));
 	}
 }

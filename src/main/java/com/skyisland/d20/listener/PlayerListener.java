@@ -5,6 +5,7 @@ import com.skyisland.d20.D20Mod;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
@@ -25,6 +26,11 @@ public class PlayerListener {
 			D20Mod.logger.info("Sending admin-token to " + event.player.getName());
 			D20Mod.proxy.sendAdminToken((EntityPlayerMP) event.player);
 		}
+	}
+	
+	@SubscribeEvent
+	public void onTest(UseHoeEvent e) {
+		D20Mod.proxy.sendRollRequest(10);
 	}
 	
 }

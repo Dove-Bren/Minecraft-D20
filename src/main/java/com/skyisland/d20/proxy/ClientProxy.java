@@ -1,13 +1,20 @@
 package com.skyisland.d20.proxy;
 
 
-import com.skyisland.d20.client.gui.OverlayHandler;
+import java.util.List;
 
+import com.skyisland.d20.client.gui.OverlayHandler;
+import com.skyisland.d20.die.Die;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
 
 public class ClientProxy extends CommonProxy {
 
 	protected boolean displayRoller = false;
+	
+	private static final String MSG_ROLL_PREFIX = "You rolled: ";
 	
 	/**
 	   * Run before anything else. Read your config, create blocks, items, etc, and register them with the GameRegistry
@@ -45,6 +52,11 @@ public class ClientProxy extends CommonProxy {
 	public void sendAdminToken(EntityPlayerMP player) {
 		; //do nothing on client side
 	}
+
+	@Override
+	public void sendRollResult(EntityPlayerMP player, int result) {
+		; //do nothing on client
+	}
 	
 	@Override
 	public boolean doDisplayRoller() {
@@ -54,5 +66,20 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void toggleRollerDisplay() {
 		displayRoller = !displayRoller;
+	}
+	
+	/**
+	 * Executes a roll on the client side. Ignores input players list, and just prints out roll.
+	 */
+	@Override
+	public void executeRoll(List<EntityPlayerMP> players, int side) {
+		//on client side, do a local roll and print out result to chat
+		int result = Die.roll(side);
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString(MSG_ROLL_PREFIX + result));
+	}
+	
+	@Override
+	public void displayRoll(int result) {
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new TextComponentString("SERVER: " + MSG_ROLL_PREFIX + result));
 	}
 }
