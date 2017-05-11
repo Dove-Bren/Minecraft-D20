@@ -1,6 +1,6 @@
 [
 {
-  "modid": "D20",
+  "modid": "d20",
   "name": "D20 Mod",
   "description": "Server-wide Dice Roller",
   "version": "${version}",

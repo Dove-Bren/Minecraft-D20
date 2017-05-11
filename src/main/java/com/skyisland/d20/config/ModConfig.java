@@ -21,7 +21,8 @@ public class ModConfig {
 		ADMINS(Category.SERVER, "admin_file", "admin.txt", true, "Filename of the file that lists admins"),
 		USE_ADMIN_NAMES(Category.SERVER, "use_admin_names", false, true, "If true, will match admins based on their name. Otherwise, will use UUIDs."),
 		SHOW_TEXT(Category.DISPLAY, "show_text", false, false, "On rolls, should the result be given as text?"),
-		SHOW_ROLL(Category.DISPLAY, "show_roll", true, false, "On rolls, should the die-rolling animation play?");
+		SHOW_ROLL(Category.DISPLAY, "show_roll", true, false, "On rolls, should the die-rolling animation play?"),
+		SHOW_ROLLER_GUI(Category.DISPLAY, "show_gui_roller", true, false, "Display the roller gui (assuming you're admin'ed, that is!)");
 		
 		public static enum Category {
 			SERVER("server", "Core properties that MUST be syncronized bytween the server and client. Client values ignored"),
@@ -242,6 +243,9 @@ public class ModConfig {
 		return getBooleanValue(Key.SHOW_ROLL);
 	}
 	
+	public boolean showRollerGui() {
+		return getBooleanValue(Key.SHOW_ROLLER_GUI);
+	}
 	public boolean useAdminNames() {
 		return getBooleanValue(Key.USE_ADMIN_NAMES);
 	}

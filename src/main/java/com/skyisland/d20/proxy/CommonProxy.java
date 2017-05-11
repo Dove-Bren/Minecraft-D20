@@ -73,14 +73,6 @@ public class CommonProxy  {
 	public void sendRollResult(EntityPlayerMP player, int result) {
 		NetworkHandler.getRollChannel().sendTo(new RollResultMessage(result), player);
 	}
-
-	public boolean doDisplayRoller() {
-		return false;
-	}
-	
-	public void toggleRollerDisplay() {
-		; //nothing to do. client only
-	}
 	
 	public void executeRoll(List<EntityPlayerMP> players, int side) {
 		//server side roll means do a roll and send to all clients

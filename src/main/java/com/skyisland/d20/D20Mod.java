@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = D20Mod.MODID, version = D20Mod.VERSION)
@@ -42,12 +43,18 @@ public class D20Mod
     	adminRegistry = new AdminRegistry(event.getSuggestedConfigurationFile().getParentFile(), ModConfig.config.getAdminFileName());
     	playerListener = new PlayerListener();
     	NetworkHandler.getInstance();
+    	proxy.preInit();
     }
     
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
         // some example code
-        
+        proxy.init();
+    }
+    
+    @EventHandler
+    public void postinit(FMLPostInitializationEvent event) {
+    	proxy.postInit();
     }
 }

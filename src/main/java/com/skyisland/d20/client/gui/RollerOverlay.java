@@ -1,17 +1,17 @@
 package com.skyisland.d20.client.gui;
 
 import com.skyisland.d20.D20Mod;
+import com.skyisland.d20.config.ModConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 
 public class RollerOverlay implements IOverlay {
 
-	private static final ResourceLocation BACK_TEXT = new ResourceLocation(D20Mod.MODID + ":textures/gui/roller_gui.png");
+	private static final ResourceLocation BACK_TEXT = new ResourceLocation(D20Mod.MODID, "textures/gui/roller_gui.png");
 	
 	private static final int TEXT_HEIGHT = 125;
 	private static final int TEXT_WIDTH = 100;
@@ -20,7 +20,7 @@ public class RollerOverlay implements IOverlay {
 	private static final int GUI_XOFFSET = 20;
 	private static final int GUI_YOFFSET = 20;
 	
-	private static final String PREFIX_UNLOCAL = "text.rollergui";
+	private static final String PREFIX_UNLOCAL = "text.roller_gui";
 	
 	private EntityPlayer player;
 	private GuiButton[] buttons;
@@ -28,12 +28,12 @@ public class RollerOverlay implements IOverlay {
 	public RollerOverlay(EntityPlayer player) {
 		this.player = player;
 		
-		if (player != null)
-			MinecraftForge.EVENT_BUS.register(this);
-		else
-			System.out.println("player is null");
+//		if (player != null)
+//			MinecraftForge.EVENT_BUS.register(this);
+//		else
+//			System.out.println("player is null");
 		
-		buttons = new GuiButton[3];
+		buttons = new GuiButton[1]; //should be 3
 		buttons[0] = new GuiButton(PREFIX_UNLOCAL + ".roll_20", new GuiButton.ClickCB(){
 
 			@Override
@@ -48,7 +48,7 @@ public class RollerOverlay implements IOverlay {
 	
 	@Override
 	public void drawOverlay(int mouseX, int mouseY) {
-		if (!D20Mod.proxy.doDisplayRoller()) {
+		if (!D20Mod.proxy.isAdmin() || !ModConfig.config.showRollerGui()) {
 			return;
 		}
 		

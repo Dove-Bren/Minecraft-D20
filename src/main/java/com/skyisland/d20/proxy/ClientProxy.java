@@ -11,8 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 
 public class ClientProxy extends CommonProxy {
-
-	protected boolean displayRoller = false;
 	
 	private static final String MSG_ROLL_PREFIX = "You rolled: ";
 	
@@ -56,16 +54,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void sendRollResult(EntityPlayerMP player, int result) {
 		; //do nothing on client
-	}
-	
-	@Override
-	public boolean doDisplayRoller() {
-		return displayRoller;
-	}
-	
-	@Override
-	public void toggleRollerDisplay() {
-		displayRoller = !displayRoller;
 	}
 	
 	/**
