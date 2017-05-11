@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.skyisland.d20.config.ModConfig;
 import com.skyisland.d20.listener.PlayerListener;
+import com.skyisland.d20.network.NetworkHandler;
 import com.skyisland.d20.proxy.CommonProxy;
 
 import net.minecraftforge.common.config.Configuration;
@@ -37,6 +38,7 @@ public class D20Mod
     	instance = this;
     	new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
     	playerListener = new PlayerListener();
+    	NetworkHandler.getInstance();
     }
     
     @EventHandler

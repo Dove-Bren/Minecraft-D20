@@ -21,6 +21,7 @@ public class AdminTokenMessage implements IMessage {
 		public IMessage onMessage(AdminTokenMessage message, MessageContext ctx) {
 			//have tag, now read it into local config
 			D20Mod.logger.info("Received admin token from server");
+			D20Mod.proxy.setAdmin();
 
 			return null;
 		}

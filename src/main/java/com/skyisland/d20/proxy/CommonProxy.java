@@ -62,7 +62,7 @@ public class CommonProxy  {
 	}
 
 	public void sendAdminToken(EntityPlayerMP player) {
-		NetworkHandler.channel.sendTo(new AdminTokenMessage(), player);
+		NetworkHandler.getAdminChannel().sendTo(new AdminTokenMessage(), player);
 	}
 
 	public boolean doDisplayRoller() {
