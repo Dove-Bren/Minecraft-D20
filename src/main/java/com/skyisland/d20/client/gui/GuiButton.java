@@ -8,6 +8,7 @@ import com.skyisland.d20.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -85,6 +86,10 @@ public class GuiButton {
 		if (!D20Mod.proxy.isAdmin() || !ModConfig.config.showRollerGui()) {
 			return;
 		}
+		Minecraft mc = Minecraft.getMinecraft();
+
+		if (mc.currentScreen == null || !(mc.currentScreen instanceof GuiInventory))
+			return;
 		
 		int mouseX = Mouse.getEventX() * event.getGui().width / event.getGui().mc.displayWidth;
         int mouseY = event.getGui().height - Mouse.getEventY() * event.getGui().height / event.getGui().mc.displayHeight - 1;
