@@ -8,6 +8,7 @@ import com.skyisland.d20.network.message.AdminTokenMessage;
 import com.skyisland.d20.network.message.RollRequestMessage;
 import com.skyisland.d20.network.message.RollResultMessage;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class CommonProxy  {
@@ -87,6 +88,11 @@ public class CommonProxy  {
 	}
 	
 	public void sendRollRequest(int sides) {
+		if (Minecraft.getMinecraft().isSingleplayer()) {
+			//just do a roll and display it
+			displayRoll(Die.roll(sides));
+			return;
+		}
 		if (isAdmin())
 			NetworkHandler.getRollChannel().sendToServer(new RollRequestMessage(sides));
 	}
