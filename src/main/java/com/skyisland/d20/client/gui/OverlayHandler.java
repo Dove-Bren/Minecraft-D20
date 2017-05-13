@@ -4,7 +4,7 @@ import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,7 +18,7 @@ public class OverlayHandler {
 	}
 	
 	@SubscribeEvent
-	public void onGuiDraw(RenderGameOverlayEvent.Post event) 
+	public void onGuiDraw(BackgroundDrawnEvent event)//RenderGameOverlayEvent.Post event) 
 	{
 //		if (dieOverlay == null)
 //			dieOverlay = new DieOverlay(Minecraft.getMinecraft().thePlayer);

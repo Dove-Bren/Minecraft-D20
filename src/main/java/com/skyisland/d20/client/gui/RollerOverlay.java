@@ -5,6 +5,7 @@ import com.skyisland.d20.config.ModConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -15,15 +16,16 @@ public class RollerOverlay implements IOverlay {
 	
 	private static final int TEXT_HEIGHT = 125;
 	private static final int TEXT_WIDTH = 100;
-	private static final int GUI_HEIGHT = 63;
-	private static final int GUI_WIDTH = 50;
-	private static final int GUI_XOFFSET = 20;
-	private static final int GUI_YOFFSET = 20;
+	private static final int GUI_HEIGHT = 125;
+	private static final int GUI_WIDTH = 100;
+	private static final int GUI_XOFFSET = 5;
+	private static final int GUI_YOFFSET = 5;
 	
 	private static final String PREFIX_UNLOCAL = "text.roller_gui";
 	
 	private EntityPlayer player;
 	private GuiButton[] buttons;
+	private GuiNumField arbField;
 	
 	public RollerOverlay(EntityPlayer player) {
 		this.player = player;
@@ -33,16 +35,52 @@ public class RollerOverlay implements IOverlay {
 //		else
 //			System.out.println("player is null");
 		
-		buttons = new GuiButton[1]; //should be 3
+		buttons = new GuiButton[4];
 		buttons[0] = new GuiButton(PREFIX_UNLOCAL + ".roll_20", new GuiButton.ClickCB(){
 
 			@Override
 			public void onClick() {
-				D20Mod.logger.info("Roll D20 please!");
+				D20Mod.proxy.sendRollRequest(20);
 			}
 			
-			}, 5 + GUI_XOFFSET, 20 + GUI_YOFFSET);
+			}, 60, 20, (GUI_WIDTH / 2) + GUI_XOFFSET + (-30), 20 + GUI_YOFFSET);
+
+		buttons[1] = new GuiButton(PREFIX_UNLOCAL + ".roll_10", new GuiButton.ClickCB(){
+
+			@Override
+			public void onClick() {
+				D20Mod.proxy.sendRollRequest(10);
+			}
+			
+			}, 48, 15, (GUI_WIDTH / 2) + GUI_XOFFSET + (-24), 50 + GUI_YOFFSET);
+
+		buttons[2] = new GuiButton(PREFIX_UNLOCAL + ".roll_4", new GuiButton.ClickCB(){
+
+			@Override
+			public void onClick() {
+				D20Mod.proxy.sendRollRequest(4);
+			}
+			
+			}, 48, 15, (GUI_WIDTH / 2) + GUI_XOFFSET + (-24), 70 + GUI_YOFFSET);
+
+		buttons[3] = new GuiButton(PREFIX_UNLOCAL + ".roll_arb", new GuiButton.ClickCB(){
+
+			@Override
+			public void onClick() {
+				D20Mod.proxy.sendRollRequest(
+						arbField.getValue(true)
+						);
+			}
+			
+			}, 48, 15, 15 + (GUI_WIDTH / 2) + GUI_XOFFSET + (-24), 100 + GUI_YOFFSET);
 		
+		arbField = new GuiNumField("6", new GuiNumField.UpdateCB() {
+			
+			@Override
+			public void onUpdate(int newValue) {
+				; //do nothing
+			}
+		}, 30, 15, 5 + GUI_XOFFSET, 100 + GUI_YOFFSET, 80);
 		
 	}
 	
@@ -54,6 +92,9 @@ public class RollerOverlay implements IOverlay {
 		
 		
 		Minecraft mc = Minecraft.getMinecraft();
+
+		if (mc.currentScreen == null || !(mc.currentScreen instanceof GuiInventory))
+			return;
 		
 //		GlStateManager.pushMatrix();
 		
@@ -69,13 +110,16 @@ public class RollerOverlay implements IOverlay {
 		
 		Gui.drawModalRectWithCustomSizedTexture(
 				GUI_XOFFSET, GUI_YOFFSET, 0, 0,
-				GUI_WIDTH, GUI_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
+				TEXT_WIDTH, TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
+				//GUI_WIDTH, GUI_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
 		
 		
 		//GlStateManager.disableAlpha();
 		
 		for (GuiButton b : buttons)
 			b.draw(mouseX, mouseY);
+		
+		arbField.draw(mouseX, mouseY);
 		
 //		GlStateManager.popMatrix();
 	}

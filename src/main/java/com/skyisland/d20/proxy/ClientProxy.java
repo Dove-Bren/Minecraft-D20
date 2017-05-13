@@ -22,8 +22,7 @@ public class ClientProxy extends CommonProxy {
 		super.preInit();
 		
 		bAdmin = false; //set admin mode off by default. Only turn it on on admin token msg
-		
-		; //create model registry
+		bAdmin = true;
 	}
 	
 	@Override
