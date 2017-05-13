@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.skyisland.d20.D20Mod;
+import com.skyisland.d20.config.ModConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -147,6 +148,10 @@ public class GuiNumField {
 	
 	@SubscribeEvent
 	public void onClick(MouseInputEvent.Pre event) {
+		if (!D20Mod.proxy.isAdmin() || !ModConfig.config.showRollerGui()) {
+			return;
+		}
+		
 		int mouseX = Mouse.getEventX() * event.getGui().width / event.getGui().mc.displayWidth;
         int mouseY = event.getGui().height - Mouse.getEventY() * event.getGui().height / event.getGui().mc.displayHeight - 1;
 		int button = Mouse.getEventButton();
@@ -162,6 +167,10 @@ public class GuiNumField {
 	
 	@SubscribeEvent
 	public void onKey(KeyboardInputEvent.Pre event) {
+		if (!D20Mod.proxy.isAdmin() || !ModConfig.config.showRollerGui()) {
+			return;
+		}
+		
 		char c0 = Keyboard.getEventCharacter();
 		int key = Keyboard.getEventKey();
 		

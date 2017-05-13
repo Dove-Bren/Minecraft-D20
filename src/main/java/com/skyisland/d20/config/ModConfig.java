@@ -249,5 +249,9 @@ public class ModConfig {
 	public boolean useAdminNames() {
 		return getBooleanValue(Key.USE_ADMIN_NAMES);
 	}
+
+	public Configuration getBase() {
+		return base;
+	}
 		
 }

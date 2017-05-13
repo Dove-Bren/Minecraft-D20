@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = D20Mod.MODID, version = D20Mod.VERSION)
+@Mod(modid = D20Mod.MODID, version = D20Mod.VERSION, guiFactory = "com.skyisland.d20.config.ConfigGuiFactory")
 public class D20Mod
 {
 	

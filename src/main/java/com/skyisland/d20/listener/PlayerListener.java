@@ -3,11 +3,15 @@ package com.skyisland.d20.listener;
 
 import com.skyisland.d20.D20Mod;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PlayerListener {
 
@@ -29,8 +33,23 @@ public class PlayerListener {
 	}
 	
 	@SubscribeEvent
-	public void onTest(UseHoeEvent e) {
-		D20Mod.proxy.sendRollRequest(10);
+	public void onTest(PlayerContainerEvent.Open e) {
+		//Update admin for single player
+		if (Minecraft.getMinecraft() != null && Minecraft.getMinecraft().isSingleplayer())
+			D20Mod.proxy.setAdmin();
+			
+			
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onTest(GuiOpenEvent e) {
+		System.out.println("open gui event ==================");
+		//Update admin for single player
+		if (Minecraft.getMinecraft().isSingleplayer())
+			D20Mod.proxy.setAdmin();
+			
+			
 	}
 	
 }

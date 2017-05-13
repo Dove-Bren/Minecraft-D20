@@ -3,6 +3,7 @@ package com.skyisland.d20.client.gui;
 import org.lwjgl.input.Mouse;
 
 import com.skyisland.d20.D20Mod;
+import com.skyisland.d20.config.ModConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -80,6 +81,11 @@ public class GuiButton {
 	
 	@SubscribeEvent
 	public void onClick(MouseInputEvent.Post event) {
+		//don't handle events if not visible
+		if (!D20Mod.proxy.isAdmin() || !ModConfig.config.showRollerGui()) {
+			return;
+		}
+		
 		int mouseX = Mouse.getEventX() * event.getGui().width / event.getGui().mc.displayWidth;
         int mouseY = event.getGui().height - Mouse.getEventY() * event.getGui().height / event.getGui().mc.displayHeight - 1;
 		int button = Mouse.getEventButton();
