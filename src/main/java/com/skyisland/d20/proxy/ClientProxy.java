@@ -21,8 +21,8 @@ public class ClientProxy extends CommonProxy {
 	public void preInit() {
 		super.preInit();
 		
-		bAdmin = false; //set admin mode off by default. Only turn it on on admin token msg
-		bAdmin = true;
+		bAdmin = Minecraft.getMinecraft().isSingleplayer();
+		//set admin mode off by default. Only turn it on on admin token msg
 	}
 	
 	@Override
